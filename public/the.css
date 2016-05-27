@@ -5,6 +5,9 @@ html {
 }
 body {
   display: table-cell;
-  /*vertical-align: middle;*/
   text-align: center;
+}
+
+#data {
+	height: 80px
 }

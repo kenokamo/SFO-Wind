@@ -1,9 +1,8 @@
 // https://github.com/kenokamo/SFO-Wind.git
-//  https://git.heroku.com/ancient-taiga-46604.git 
+// https://git.heroku.com/ancient-taiga-46604.git 
 
 var path = require("path");
 var express = require("express");
-var zipdb = require("zippity-do-dah");
 var ForecastIo = require("forecastio"); // https://developer.forecast.io/
 
 var app = express();
@@ -18,18 +17,7 @@ app.get("/", function(req, res) {
   res.render("index");
 });
 
-// app.get(/^\/(\d{5})$/, function(req, res, next) {
-//   var zipcode = req.params[0];
-//   var location = zipdb.zipcode(zipcode);
-//   if (!location.zipcode) {
-//     next();
-//     return;
-//   }
-
-//   var latitude = location.latitude;
-//   var longitude = location.longitude;
-
-app.use(function(req, res, next) {
+app.get("/api", function(req, res, next) {
   var zipcode = 00000;
   var latitude = 37.62;
   var longitude = -122.37;
@@ -39,7 +27,6 @@ app.use(function(req, res, next) {
       next();
       return;
     }
-	console.log(data)
     res.json({
       zipcode: zipcode,
       windSpeed: data.currently.windSpeed,

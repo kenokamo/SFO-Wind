@@ -1,24 +1,40 @@
+/* global $*/
 $(function() {
-  var $h1 = $("h1");
-  var $zip = $("input[name='zip']");
-  $("form").on("submit", function(event) {
-    event.preventDefault();
-    var zipCode = $.trim($zip.val());
-    $h1.text("Loading...");
+  loadData();
+
+  $("button").on("click", function(event) {
+    loadData();
+  });
+  
+  setInterval(loadData, 5000);
+  
+});
+
+function loadData() {
+    var $h3 = $("h3");
+    var $data = $("#data");
+
+    $data.html("<h3>Loading...</h3>");
+    
     var request = $.ajax({
-      url: "/" + zipCode,
+      url: "/api",
       dataType: "json"
     });
     request.done(function(data) {
       var windSpeed = data.windSpeed;
       var windBearing = data.windBearing;
-      $h1.text("Windspeed is " + windSpeed + " at " + windBearing + " " + bearingToDirection(windBearing));
+      var windTxt = windSpeed + " mph at bearing " + windBearing + " (" + bearingToDirection(windBearing) + ")";
+      var dateTxt = (new Date()).toString();
+      var html = "<h3>" + windTxt + "</h3><h4>" + dateTxt + "</h4>";
+      $data.fadeOut("fast", function() {
+      	$(this).html(html).fadeIn("slow");
+      });
+      
     });
     request.fail(function() {
-      $h1.text("Error!");
+      $h3.text("Error loading data");
     });
-  });
-});
+}
 
 function bearingToDirection(bearing) {
 	if (bearing < 22 || bearing > 338) return "N";
@@ -28,5 +44,5 @@ function bearingToDirection(bearing) {
 	if (bearing < 202) return "S";
 	if (bearing < 248) return "SW";
 	if (bearing < 292) return "W";
-	if (bearing < 338) return "NW"
+	if (bearing < 338) return "NW";
 }
