@@ -1,12 +1,21 @@
 /* global $*/
 $(function() {
   loadData();
+  var df = 0;
 
   $("button").on("click", function(event) {
-    loadData();
+  	 df = df + 1;
+  	 $("#DD").text(df);
+  	 $("button").prop("disabled",true);
+     loadData();
+     console.log(1)
+     setTimeout(function(){
+     	console.log(2)
+     	$("button").prop("disabled",false);
+     }, 3000);
   });
   
-  setInterval(loadData, 5000);
+  setInterval(loadData, 300000);
   
 });
 
@@ -29,6 +38,7 @@ function loadData() {
       $data.fadeOut("fast", function() {
       	$(this).html(html).fadeIn("slow");
       });
+      $("button").prop("disabled",false);
       
     });
     request.fail(function() {
