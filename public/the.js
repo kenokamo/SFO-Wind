@@ -1,16 +1,11 @@
 /* global $*/
 $(function() {
   loadData();
-  var df = 0;
 
   $("button").on("click", function(event) {
-  	 df = df + 1;
-  	 $("#DD").text(df);
   	 $("button").prop("disabled",true);
      loadData();
-     console.log(1)
      setTimeout(function(){
-     	console.log(2)
      	$("button").prop("disabled",false);
      }, 3000);
   });
@@ -34,7 +29,7 @@ function loadData() {
       var windBearing = data.windBearing;
       var windTxt = windSpeed + " mph at bearing " + windBearing + " (" + bearingToDirection(windBearing) + ")";
       var dateTxt = (new Date()).toString();
-      var html = "<h3>" + windTxt + "</h3><h4>" + dateTxt + "</h4>";
+      var html = "<h3>" + windTxt + "</h3>" + dateTxt;
       $data.fadeOut("fast", function() {
       	$(this).html(html).fadeIn("slow");
       });
