@@ -5,6 +5,6 @@ html {
 }
 body {
   display: table-cell;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
   text-align: center;
 }
